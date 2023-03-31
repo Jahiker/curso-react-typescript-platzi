@@ -1,17 +1,21 @@
-// import type { FunctionComponent, FC } from "react";
+import { useRef } from "react";
 
-export const RandomFox = (): JSX.Element => {
-    return <img src="" alt="" />;
+type Props = {
+  image: string;
+  alt: string;
 };
 
-// export const RandomFox1 = () => {
-//   return <img src="" alt="" />;
-// };
+export const RandomFox = ({ image }: Props): JSX.Element => {
+  const node = useRef<HTMLImageElement>(null)
 
-// export const RandomFox2: FunctionComponent = () => {
-//   return <img src="" alt="" />;
-// };
-
-// export const RandomFox3: FC = () => {
-//   return <img src="" alt="" />;
-// };
+  return (
+    <img
+      src={image}
+      alt=""
+      width={320}
+      height={"auto"}
+      className="mx-auto my-5 rounded-md"
+      ref={node}
+    />
+  );
+};

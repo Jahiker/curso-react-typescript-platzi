@@ -1,6 +1,36 @@
-import Head from 'next/head'
+import { useState } from "react";
+import type { MouseEventHandler } from "react";
+import Head from "next/head";
+import { RandomFox } from "@/components/RandomFox";
+
+// Generate a random number between 1 and 123
+const random = (): number => Math.floor(Math.random() * 123) + 1;
+
+// Generate simple unique id
+const generateId = () => Math.random().toString(36).split(".")[1];
+
+export interface ImageItems {
+  id: string;
+  url: string;
+}
 
 export default function Home() {
+  const [images, setImages] = useState<ImageItems[]>([]);
+
+  const addNewFox: MouseEventHandler<HTMLButtonElement> = (event): void => {
+    event.preventDefault();
+
+    const target = event.target;
+    console.log("🚀 ~ file: index.tsx:23 ~ Home ~ target:", target);
+
+    const newImageItem: ImageItems = {
+      id: generateId(),
+      url: `https://randomfox.ca/images/${random()}.jpg`,
+    };
+
+    setImages([...images, newImageItem]);
+  };
+
   return (
     <>
       <Head>
@@ -10,8 +40,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className='uppercase font-extrabold text-3xl underline'>Hello, Platzi!</h1>
+        <h1 className="text-3xl font-extrabold text-center underline uppercase">
+          Hello, Platzi!
+        </h1>
+        <p className="p-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+          obcaecati quia cupiditate fugiat, omnis molestias dolore temporibus
+          doloremque itaque vel voluptatem qui quidem doloribus, sapiente,
+          laborum rem atque numquam quos!
+        </p>
+
+        <button
+          onClick={addNewFox}
+          className="flex items-center justify-center px-3 py-1 mx-auto my-5 text-white bg-blue-600 rounded-md hover:bg-blue-800"
+        >
+          ADD NEW FOX
+        </button>
+        {images?.map(({ id, url }) => (
+          <div key={id} className="p-4">
+            <RandomFox image={url} alt={`Fox image ${id}`} />
+          </div>
+        ))}
+        {}
       </main>
     </>
-  )
+  );
 }
