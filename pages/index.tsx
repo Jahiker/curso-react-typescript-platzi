@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { MouseEventHandler } from "react";
 import Head from "next/head";
-import { RandomFox } from "@/components/RandomFox";
+import { LazyImage } from "@/components/LazyImage";
 
 // Generate a random number between 1 and 123
 const random = (): number => Math.floor(Math.random() * 123) + 1;
@@ -21,7 +21,6 @@ export default function Home() {
     event.preventDefault();
 
     const target = event.target;
-    console.log("🚀 ~ file: index.tsx:23 ~ Home ~ target:", target);
 
     const newImageItem: ImageItems = {
       id: generateId(),
@@ -43,7 +42,7 @@ export default function Home() {
         <h1 className="text-3xl font-extrabold text-center underline uppercase">
           Hello, Platzi!
         </h1>
-        <p className="p-3">
+        <p className="p-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
           obcaecati quia cupiditate fugiat, omnis molestias dolore temporibus
           doloremque itaque vel voluptatem qui quidem doloribus, sapiente,
@@ -58,7 +57,14 @@ export default function Home() {
         </button>
         {images?.map(({ id, url }) => (
           <div key={id} className="p-4">
-            <RandomFox image={url} alt={`Fox image ${id}`} />
+            <LazyImage
+              src={url}
+              alt={`Fox image ${id}`}
+              onClick={(e) => console.log(e)}
+              width={320}
+              height={"auto"}
+              className="mx-auto my-5 rounded-md bg-slate-100"
+            />
           </div>
         ))}
         {}
